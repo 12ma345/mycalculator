@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Math Calculator</title>
+<style>
+  /* Background with math symbols pattern */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #1e2a38 url('https://cdn.pixabay.com/photo/2017/08/30/00/34/mathematics-2698387_1280.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  /* Calculator container */
+  .calculator {
+    background: rgba(30, 42, 56, 0.95);
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.7);
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .calculator h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+  }
+
+  /* Display */
+  #display {
+    width: 100%;
+    font-size: 2.5rem;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    border: none;
+    background: #273544;
+    color: #fff;
+    text-align: right;
+    box-sizing: border-box;
+  }
+
+  /* Buttons Grid */
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+  }
+
+  button {
+    font-size: 2rem;
+    padding: 20px 0;
+    border-radius: 15px;
+    border: none;
+    background: #3b506d;
+    color: #f0f0f0;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    user-select: none;
+  }
+
+  button:hover {
+    background: #556a93;
+  }
+
+  button.operator {
+    background: #ff9500;
+    color: #fff;
+  }
+
+  button.operator:hover {
+    background: #ffa733;
+  }
+
+  button.clear {
+    background: #ff3b30;
+  }
+
+  button.clear:hover {
+    background: #ff675f;
+  }
+
+  button.equals {
+    grid-column: span 4;
+    background: #4cd964;
+    color: #fff;
+  }
+
+  button.equals:hover {
+    background: #5ce977;
+  }
+</style>
+</head>
+<body>
+  <div class="calculator">
+    <h1>Math Calculator</h1>
+    <input type="text" id="display" readonly placeholder="0" />
+    <div class="buttons">
+      <button onclick="appendNumber('7')">7</button>
+      <button onclick="appendNumber('8')">8</button>
+      <button onclick="appendNumber('9')">9</button>
+      <button class="operator" onclick="appendOperator('/')">÷</button>
+
+      <button onclick="appendNumber('4')">4</button>
+      <button onclick="appendNumber('5')">5</button>
+      <button onclick="appendNumber('6')">6</button>
+      <button class="operator" onclick="appendOperator('*')">×</button>
+
+      <button onclick="appendNumber('1')">1</button>
+      <button onclick="appendNumber('2')">2</button>
+      <button onclick="appendNumber('3')">3</button>
+      <button class="operator" onclick="appendOperator('-')">−</button>
+
+      <button class="clear" onclick="clearDisplay()">C</button>
+      <button onclick="appendNumber('0')">0</button>
+      <button onclick="appendNumber('.')">.</button>
+      <button class="operator" onclick="appendOperator('+')">+</button>
+
+      <button class="equals" onclick="calculateResult()">=</button>
+    </div>
+  </div>
+
+<script>
+  const display = document.getElementById('display');
+
+  function appendNumber(number) {
+    if(display.value === "0") {
+      display.value = number;
+    } else {
+      display.value += number;
+    }
+  }
+
+  function appendOperator(operator) {
+    const lastChar = display.value.slice(-1);
+    if ('+-/*'.includes(lastChar)) {
+      display.value = display.value.slice(0, -1) + operator;
+    } else if(display.value === '') {
+      // don't add operator if display is empty
+      return;
+    } else {
+      display.value += operator;
+    }
+  }
+
+  function clearDisplay() {
+    display.value = '';
+  }
+
+  function calculateResult() {
+    try {
+      const result = eval(display.value);
+      display.value = result;
+    } catch {
+      display.value = 'Error';
+    }
+  }
+</script>
+</body>
+</html>
